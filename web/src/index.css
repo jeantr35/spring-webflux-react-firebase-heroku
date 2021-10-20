@@ -105,3 +105,13 @@ body {
     float: right;
   }
   
+  footer{
+    padding-top: 30px;
+    text-align: center;
+  }
+
+  footer p{
+    text-align: center;
+    
+    padding-bottom: 8px;
+  }
