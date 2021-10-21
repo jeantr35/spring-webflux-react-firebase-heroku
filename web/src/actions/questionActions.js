@@ -54,6 +54,20 @@ export function fetchCategoryQuestions(category) {
     }
 }
 
+export function fetchQuestionsByCriteria(title) {
+    console.log(title)
+    return async dispatch => {
+        dispatch(loading())
+        try {
+            const response = await fetch(`${URL_BASE}/getQuestionsByCriteria/${title}`)
+            const data = await response.json()
+            dispatch(success({ questions: data, redirect: null }))
+        } catch (error) {
+            dispatch(failure())
+        }
+    }
+}
+
 export function fetchQuestion(id) {
     return async dispatch => {
         dispatch(loading())

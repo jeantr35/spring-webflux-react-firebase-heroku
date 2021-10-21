@@ -116,8 +116,6 @@ body {
     padding-bottom: 8px;
   }
 
-  .CategoryFilter{
-    box-sizing: border-box;
-    margin-bottom: 20px;
-    display: inline-block;
+  .questionFilter{
+    width: 100px;
   }

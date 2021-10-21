@@ -6,9 +6,12 @@ const CategoryFilter = (dispatch, renderQuestions) => {
 
     const { register, handleSubmit } = useForm();
 
+    
+
     const onSubmit = data => {
         console.log(data.type);
         dispatch(fetchCategoryQuestions(data.type));
+        renderQuestions();
     };
 
     return ( 
