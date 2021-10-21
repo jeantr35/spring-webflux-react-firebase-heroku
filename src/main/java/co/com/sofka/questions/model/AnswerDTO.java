@@ -15,15 +15,27 @@ public class AnswerDTO {
 
     private Integer position;
 
+    @NotBlank
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 
     public AnswerDTO() {
 
     }
 
-    public AnswerDTO(@NotBlank String questionId, @NotBlank String userId, @NotBlank String answer) {
+    public AnswerDTO(@NotBlank String questionId, @NotBlank String userId, @NotBlank String answer, @NotBlank String email) {
         this.userId = userId;
         this.questionId = questionId;
         this.answer = answer;
+        this.email = email;
     }
 
     public Integer getPosition() {
