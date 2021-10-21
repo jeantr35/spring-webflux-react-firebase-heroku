@@ -41,6 +41,19 @@ export function fetchOwnerQuestions(userId) {
     }
 }
 
+export function fetchCategoryQuestions(category) {
+    return async dispatch => {
+        dispatch(loading())
+        try {
+            const response = await fetch(`${URL_BASE}/getQuestionsByCategory/${category}`)
+            const data = await response.json()
+            dispatch(success({ questions: data, redirect: null }))
+        } catch (error) {
+            dispatch(failure())
+        }
+    }
+}
+
 export function fetchQuestion(id) {
     return async dispatch => {
         dispatch(loading())
@@ -75,6 +88,7 @@ export function postQuestion(question) {
         }
     }
 }
+
 
 export function deleteQuestion(id) {
     return async dispatch => {

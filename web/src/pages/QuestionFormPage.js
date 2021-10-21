@@ -37,10 +37,10 @@ const FormPage = ({ dispatch, loading, redirect, userId }) => {
                 <div>
                     <label for="category">Category</label>
                     <select {...register("category")} id="category">
-                        <option value="TECHNOLOGY AND COMPUTER">TECHNOLOGY AND COMPUTER</option>
+                        <option value="TECHNOLOGY-AND-COMPUTER">TECHNOLOGY AND COMPUTER</option>
                         <option value="SCIENCES">SCIENCES</option>
-                        <option value="SOFTWARE DEVELOPMENT">SOFTWARE DEVELOPMENT</option>
-                        <option value="SOCIAL SCIENCES">SOCIAL SCIENCES</option>
+                        <option value="SOFTWARE-DEVELOPMENT">SOFTWARE DEVELOPMENT</option>
+                        <option value="SOCIAL-SCIENCES">SOCIAL SCIENCES</option>
                         <option value="LANGUAGE">LANGUAGE</option>
 
                     </select>

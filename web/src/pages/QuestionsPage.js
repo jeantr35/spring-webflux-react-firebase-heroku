@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-
-import { fetchQuestions } from '../actions/questionActions'
+import CategoryFilter from '../components/CategoryFilter'
+import { fetchQuestions, fetchOwnerQuestions } from '../actions/questionActions'
 import { Question } from '../components/Question'
 
 const QuestionsPage = ({ dispatch, loading, questions, hasErrors }) => {
     useEffect(() => {
         dispatch(fetchQuestions())
     }, [dispatch])
+
     
     const renderQuestions = () => {
         if (loading) return <p>Loading questions...</p>
@@ -16,9 +17,14 @@ const QuestionsPage = ({ dispatch, loading, questions, hasErrors }) => {
         return questions.map(question => <Question key={question.id} question={question} excerpt />)
     }
 
+    const filterTest = () => {
+        console.log("Hello")
+    }
+
     return (
         <section>
             <h1>Questions</h1>
+            <CategoryFilter dispatch={dispatch} renderQuestions={filterTest}/>
             {renderQuestions()}
         </section>
     )

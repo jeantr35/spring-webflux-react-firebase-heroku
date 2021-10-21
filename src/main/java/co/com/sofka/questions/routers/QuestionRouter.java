@@ -42,6 +42,19 @@ public class QuestionRouter {
     }
 
     @Bean
+    public RouterFunction<ServerResponse> filterQuestionsByType(FilterQuestionsByCategoryUseCase filterQuestionsByCategoryUseCase) {
+        return route(
+                GET("/getQuestionsByCategory/{type}"),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(
+                                filterQuestionsByCategoryUseCase.apply(request.pathVariable("type")),
+                                QuestionDTO.class
+                        ))
+        );
+    }
+
+    @Bean
     public RouterFunction<ServerResponse> create(CreateUseCase createUseCase) {
         Function<QuestionDTO, Mono<ServerResponse>> executor = questionDTO ->  createUseCase.apply(questionDTO)
                 .flatMap(result -> ServerResponse.ok()
