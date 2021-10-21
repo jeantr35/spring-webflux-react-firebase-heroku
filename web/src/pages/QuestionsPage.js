@@ -1,17 +1,23 @@
 import React, { useEffect } from 'react'
-import { useForm } from "react-hook-form";
-import { connect } from 'react-redux'
-import CategoryFilter from '../components/CategoryFilter'
-import { fetchQuestions, fetchCategoryQuestions, fetchQuestionsByCriteria } from '../actions/questionActions'
+import { connect } from 'react-redux';
+import {CategoryFilter} from '../components/CategoryFilter' 
+import { fetchQuestions, fetchCategoryQuestions} from '../actions/questionActions'
 import { Question } from '../components/Question'
+import { Switch, Route, Redirect } from 'react-router';
 
-const QuestionsPage = ({ dispatch, loading, questions, hasErrors }) => {
-    
+const QuestionsPage = ({ dispatch, loading, questions, hasErrors, match, redirect}) => {
+    const { name } = match.params
+
     useEffect(() => {
-        dispatch(fetchQuestions())
-    }, [dispatch])
-
-    const { register, handleSubmit } = useForm();
+        if(name === undefined){
+            dispatch(fetchQuestions())
+             console.log("normal");
+        }
+        if(name !== undefined){
+            dispatch(fetchCategoryQuestions(name))
+            console.log(name);
+        }
+    }, [dispatch, redirect, name])
 
     const renderQuestions = () => {
         if (loading) return <p>Loading questions...</p>
@@ -20,41 +26,10 @@ const QuestionsPage = ({ dispatch, loading, questions, hasErrors }) => {
         return questions.map(question => <Question key={question.id} question={question} excerpt />)
     }
 
-    const onSubmit = data => {
-        if(data.question === null || data.question === ""){
-            dispatch(fetchCategoryQuestions(data.type));
-        }
-        if (data.type === "none" && data.question !== null && data.question !== "") {
-            dispatch(fetchQuestionsByCriteria(data.question));
-        }
-        if (data.type === "none" && data.question === "") {
-            dispatch(fetchQuestions());
-        }
-        if (data.type !== "none" && data.question !== "") {
-            dispatch(fetchQuestions());
-        }
-        renderQuestions();
-    };
-
     return (
         <section>
+            <CategoryFilter/>
             <h1>Questions</h1>
-            <form onSubmit={handleSubmit(onSubmit)} >
-            <div id="CategoryFilter">
-                <label for="type">Type filter</label>
-                <select {...register("type")} id="">
-                        <option value="none">NONE</option>
-                        <option value="TECHNOLOGY-AND-COMPUTER">TECHNOLOGY AND COMPUTER</option>
-                        <option value="SCIENCES">SCIENCES</option>
-                        <option value="SOFTWARE-DEVELOPMENT">SOFTWARE DEVELOPMENT</option>
-                        <option value="SOCIAL-SCIENCES">SOCIAL SCIENCES</option>
-                        <option value="LANGUAGE">LANGUAGE</option>
-                </select>
-                <label for="question">Question</label>
-                <textarea id="question" {...register("question", { required: false, maxLength: 300, minLength: 3})} />
-                <button type="submit" className="button">Filter</button>
-            </div>
-            </form>
 
             {renderQuestions()}
         </section>
@@ -65,6 +40,7 @@ const mapStateToProps = state => ({
     loading: state.question.loading,
     questions: state.question.questions,
     hasErrors: state.question.hasErrors,
+    redirect: state.question.redirect,
 })
 
 export default connect(mapStateToProps)(QuestionsPage)

@@ -116,6 +116,8 @@ body {
     padding-bottom: 8px;
   }
 
-  .questionFilter{
-    width: 100px;
+  #filterCategory{
+    display: flex;
+    padding: 2rem 0;
+    background: transparent;
   }

@@ -1,36 +1,16 @@
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { fetchCategoryQuestions } from "../actions/questionActions";
+import React from "react";
+import { Link } from 'react-router-dom'
 
-const CategoryFilter = (dispatch, renderQuestions) => {
 
-    const { register, handleSubmit } = useForm();
-
-    
-
-    const onSubmit = data => {
-        console.log(data.type);
-        dispatch(fetchCategoryQuestions(data.type));
-        renderQuestions();
-    };
-
-    return ( 
-        <form onSubmit={handleSubmit(onSubmit)} >
-            <div id="CategoryFilter">
-                <label for="type">Type</label>
-                <select {...register("type")} id="">
-                        <option value="TECHNOLOGY-AND-COMPUTER">TECHNOLOGY AND COMPUTER</option>
-                        <option value="SCIENCES">SCIENCES</option>
-                        <option value="SOFTWARE-DEVELOPMENT">SOFTWARE DEVELOPMENT</option>
-                        <option value="SOCIAL-SCIENCES">SOCIAL SCIENCES</option>
-                        <option value="LANGUAGE">LANGUAGE</option>
-                </select>
-                <button type="submit" className="button">Filter</button>
-            </div>
-        </form>
-     );
-                
-}
-
- 
-export default CategoryFilter;
+export const CategoryFilter = () => (
+        <nav id="filterCategory">
+          <section>
+            <Link to="/questions">ALL</Link>
+            <Link to="/questionFilter/category/TECHNOLOGY-AND-COMPUTER">TECH</Link>
+            <Link to="/questionFilter/category/SCIENCES">SCIENCE</Link>
+            <Link to="/questionFilter/category/SOFTWARE-DEVELOPMENT">SOFTWARE DEV</Link>
+            <Link to="/questionFilter/category/SOCIAL-SCIENCES">SOCIAL</Link>
+            <Link to="/questionFilter/category/LANGUAGE">LANGUAGE</Link>
+          </section>
+        </nav>
+)
