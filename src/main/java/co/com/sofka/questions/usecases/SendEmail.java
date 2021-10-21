@@ -3,8 +3,10 @@ package co.com.sofka.questions.usecases;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+@Service
 public class SendEmail {
 
     @Autowired
