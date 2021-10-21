@@ -24,8 +24,11 @@ const QuestionsPage = ({ dispatch, loading, questions, hasErrors }) => {
         if(data.question === null || data.question === ""){
             dispatch(fetchCategoryQuestions(data.type));
         }
-        if (data.type === "none") {
-            dispatch(fetchQuestionsByCriteria(data.type));
+        if (data.type === "none" && data.question !== null && data.question !== "") {
+            dispatch(fetchQuestionsByCriteria(data.question));
+        }
+        if (data.type === "none" && data.question === "") {
+            dispatch(fetchQuestions());
         }
         renderQuestions();
     };
@@ -45,7 +48,7 @@ const QuestionsPage = ({ dispatch, loading, questions, hasErrors }) => {
                         <option value="LANGUAGE">LANGUAGE</option>
                 </select>
                 <label for="question">Question</label>
-                <textarea id="question" {...register("question", { required: false, maxLength: 300 })} />
+                <textarea id="question" {...register("question", { required: false, maxLength: 300, minLength: 3})} />
                 <button type="submit" className="button">Filter</button>
             </div>
             </form>
