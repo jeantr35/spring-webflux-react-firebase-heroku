@@ -5,6 +5,7 @@ import co.com.sofka.questions.reposioties.QuestionRepository;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
+import java.util.Locale;
 import java.util.function.Function;
 
 @Service
@@ -21,7 +22,7 @@ public class FilterQuestionsByCriteriaUseCase implements Function<String, Flux<Q
     @Override
     public Flux<QuestionDTO> apply(String category) {
         return questionRepository.findAll().filter(question -> {
-                    if (question.getQuestion().contains(category))
+                    if (question.getQuestion().toLowerCase(Locale.ROOT).contains(category.toLowerCase(Locale.ROOT)))
                         return true;
                     return false;
                 })

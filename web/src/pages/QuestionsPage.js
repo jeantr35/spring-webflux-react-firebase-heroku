@@ -30,6 +30,9 @@ const QuestionsPage = ({ dispatch, loading, questions, hasErrors }) => {
         if (data.type === "none" && data.question === "") {
             dispatch(fetchQuestions());
         }
+        if (data.type !== "none" && data.question !== "") {
+            dispatch(fetchQuestions());
+        }
         renderQuestions();
     };
 
