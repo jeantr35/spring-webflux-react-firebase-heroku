@@ -1,52 +1,71 @@
-import React from 'react';
-import { browser, useHistory } from 'react-router';
-import { ReactSearchAutocomplete } from 'react-search-autocomplete'
+import React, { useEffect, useState, useRef } from "react";
+import { useHistory } from "react-router";
 
 const Autoomplete = (questions) => {
-    const URL_BASE = 'https://pure-tor-90145.herokuapp.com';
+  const history = useHistory();
+  const [suggest, setSuggest] = useState([]);
+  const [resfound, setResfound] = useState(true);
+  const [searchtext, setSearchtext] = useState("");
+  const items = questions.questions;
 
-    const items = questions.questions;
-    const history = useHistory();
-    
-      const handleOnSearch = (string, results) => {
-        document.addEventListener("keydown", function(ev){
-            if (ev.key === "Enter") {
-                if (results[0] !== undefined) {
-                    history.push(`/question/${results[0].id}`) 
-                }       
-            }});
+  const handleChange = (e) => {
+      let searchval = e.target.value;
+      let suggestion = [];
+      if (searchval.length > 0) {
+        suggestion = items
+          .sort()
+          .filter((e) => e.question.toLowerCase().includes(searchval.toLowerCase()));
+          setResfound(suggestion.length !== 0 ? true : false);
       }
-    
-      const handleOnHover = (result) => {
+      setSuggest(suggestion)
+      setSearchtext(searchval);
+  }
 
-      }
-    
-      const handleOnSelect = (item) => {
-        
-      }
-    
-      const handleOnFocus = () => {
-        
-      }
-    
-      return (
-        <div className="App">
-          <header className="App-header">
-            <div style={{ width: 400 }}>
-              <ReactSearchAutocomplete
-                items={items}
-                onSearch={handleOnSearch}
-                onHover={handleOnHover}
-                onSelect={handleOnSelect}
-                onFocus={handleOnFocus}
-                fuseOptions={{ keys: ["question"], minMatchCharLength: 3}}
-                resultStringKeyName="question"
-                autoFocus
-              />
-            </div>
-          </header>
-        </div>
-      )
-}
- 
+  const suggestedText = (value) => {
+    console.log(value);
+    setSearchtext(value);
+    setSuggest([]);
+  };
+
+  const getSuggestions = () => {
+    if (suggest.length === 0 && searchtext !== "" && !resfound) {
+      return <p>Search Content Not Found</p>;
+    }
+    return (
+        <ul>
+          {suggest.map((item, index) => {
+            return (
+              <div key={index}>
+                <li onClick={() => suggestedText(item.question)}>{item.question}</li>
+                {index !== suggest.length - 1 && <hr />}
+              </div>
+            );
+          })}
+        </ul>
+      );
+    }
+
+
+    const handleEnter = (ev) => {
+        if(ev.key == 'Enter'){
+            suggest.length > 0 ? history.push(`/question/${suggest[0].id}`) : history.push(`/questions`)
+         } 
+    }
+
+
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder="search"
+        onChange={handleChange}
+        value={searchtext}
+        className="search"
+        onKeyDown={handleEnter}
+      />
+      {getSuggestions()}
+    </div>
+  );
+};
+
 export default Autoomplete;

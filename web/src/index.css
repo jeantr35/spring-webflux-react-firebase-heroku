@@ -121,3 +121,16 @@ body {
     padding: 2rem 0;
     background: transparent;
   }
+
+
+ul {
+    
+}
+
+ul li {
+    cursor: pointer;
+}
+
+hr{
+    border-top: 1px solid rgba(56, 56, 56, 0.753);
+}
