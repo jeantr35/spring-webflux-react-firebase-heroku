@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-
+import { deleteAnswer } from '../actions/questionActions'
 import { fetchQuestion } from '../actions/questionActions'
 
 import { Question } from '../components/Question'
@@ -27,9 +27,13 @@ const SingleQuestionPage = ({
     return <Question question={question} />
   }
 
+  const onDeleteAnswer = (answer) => {
+    dispatch(deleteAnswer(answer))
+}
+
   const renderAnswers = () => {
     return (question.answers && question.answers.length) ? question.answers.map(answer => (
-      <Answer key={answer.id} answer={answer} />
+      <Answer key={answer.id} answer={answer} onDelete={onDeleteAnswer} userId={userId}/>
     )) : <p>Empty answer!</p>;
   }
 
