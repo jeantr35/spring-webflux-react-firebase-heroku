@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-
+import swal from 'sweetalert';
 import { fetchOwnerQuestions, deleteQuestion } from '../actions/questionActions'
 import { Question } from '../components/Question'
 
@@ -16,7 +16,21 @@ const OwnerQuestionsPage = ({ dispatch, loading, questions, hasErrors, redirect,
     }, [redirect, dispatch, userId]);
 
     const onDelete = (id) => {
-        dispatch(deleteQuestion(id))
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this question and it's answers!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                dispatch(deleteQuestion(id))
+              swal("Poof! Your question has been deleted!", {
+                icon: "success",
+              });
+            }
+          });
     }
 
 
