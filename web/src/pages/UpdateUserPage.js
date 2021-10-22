@@ -1,41 +1,39 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import {  fetchQuestion, postAnswer } from '../actions/questionActions'
+import {  fetchQuestion, updateUser } from '../actions/questionActions'
 import { connect } from 'react-redux'
-import { Question } from '../components/Question'
 
-const UpdateUserPage = ({ dispatch, loading, redirect, match,hasErrors, userId, email, name }) => {
+const UpdateUserPage = ({ dispatch, loading, redirect, match,hasErrors, userId, email, name, photoURL, auth }) => {
     const { register, handleSubmit } = useForm();
     const { id } = match.params
     const history = useHistory();
+    const [newname, setNewName] = useState(name)
 
     const onSubmit = data => {
         data.userId =  userId;
         data.email = email;
         data.photoURL = photoURL;
-        dispatch(updateUser(data));
+        console.log(data.name)
+        dispatch(updateUser(data.name, auth));
+        console.log(data.name)
     };
+
+    const handleChange = (e) => {
+        setNewName(e.target.value);
+    }
 
     useEffect(() => {
         dispatch(fetchQuestion(id))
-    }, [dispatch, id])
-
-    useEffect(() => {
-        if (redirect) {
-            history.push(redirect);
-        }
-    }, [redirect, history])
-
-
+    }, [dispatch,redirect, history])
 
     return (
         <section>
             <h1>Update your name</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div>
-                    <label for="answer">Answer</label>
-                    <input id="name" {...register("name", { required: true, maxLength: 300 })} />
+                    <label htmlFor="answer">Name</label>
+                    <input id="name" {...register("name", { required: true, maxLength: 300 })} onChange={handleChange} value={newname}/>
                 </div>
                 <button type="submit" className="button" disabled={loading} >{
                     loading ? "Saving ...." : "Save"
@@ -53,7 +51,8 @@ const mapStateToProps = state => ({
     userId: state.auth.uid,
     email: state.auth.email,
     name: state.auth.name,
-    photoURL: state.auth.photoURL
+    photoURL: state.auth.photoURL,
+    auth: state.auth
 })
 
 export default connect(mapStateToProps)(UpdateUserPage)

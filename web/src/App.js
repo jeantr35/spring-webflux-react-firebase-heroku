@@ -18,6 +18,7 @@ import QuestionFormPage from './pages/QuestionFormPage'
 import AnswerFormPage from './pages/AnswerFormPage'
 import OwnerQuestionsPage from './pages/OwnerQuestionsPage'
 import { useAuthState } from "react-firebase-hooks/auth";
+import UpdateUserPage from './pages/UpdateUserPage';
 
 firebase.initializeApp({
   apiKey: "AIzaSyBSDlcJkzcY6ehtMZq0UvYCRYfJMjRaEFI",
@@ -36,6 +37,7 @@ const App = ({ dispatch }) => {
   if(user){
     dispatch(login(user.email, user.uid, user.photoURL, user.displayName))
   }
+
   return (
     <Router>
       {user ?
@@ -51,6 +53,7 @@ const App = ({ dispatch }) => {
             <Route exact path="/list" component={OwnerQuestionsPage} />
             <Route exact path="/answer/:id" component={AnswerFormPage} />
             <Route exact path="/new" component={QuestionFormPage} />
+            <Route exact path="/update" component={UpdateUserPage} />
             <Redirect to="/" />
           </Switch>
         </> :

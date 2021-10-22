@@ -1,5 +1,4 @@
-const URL_BASE = 'http://localhost:8080';
-/* const URL_BASE = 'https://pure-tor-90145.herokuapp.com'; */
+const URL_BASE = 'https://pure-tor-90145.herokuapp.com';
 
 export const LOADING = 'LOADING'
 export const LOADED_SUCCESS = 'LOADED_SUCCESS'
@@ -13,6 +12,25 @@ export const success = payload => ({
 });
 
 export const failure = () => ({ type: LOADED_FAILURE })
+
+export function updateUser(name, auth){
+    const user = auth().currentUser;
+    return async dispatch => {
+        console.log(name)
+        dispatch(loading())
+        console.log(name)
+        try {
+            user.updateProfile({
+                displayName: {name}
+              })
+              console.log(name)
+            dispatch(success({redirect: `/update`}))
+            console.log(name)
+        } catch (error) {
+            dispatch(failure())
+        }
+    }
+}
 
 export function fetchQuestions() {
     return async dispatch => {
