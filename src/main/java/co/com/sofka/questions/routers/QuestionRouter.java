@@ -55,19 +55,6 @@ public class QuestionRouter {
     }
 
     @Bean
-    public RouterFunction<ServerResponse> filterQuestionsByCriteria(FilterQuestionsByCriteriaUseCase filterQuestionsByCriteriaUseCase) {
-        return route(
-                GET("/getQuestionsByCriteria/{criteria}"),
-                request -> ServerResponse.ok()
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .body(BodyInserters.fromPublisher(
-                                filterQuestionsByCriteriaUseCase.apply(request.pathVariable("criteria")),
-                                QuestionDTO.class
-                        ))
-        );
-    }
-
-    @Bean
     public RouterFunction<ServerResponse> create(CreateUseCase createUseCase) {
         Function<QuestionDTO, Mono<ServerResponse>> executor = questionDTO ->  createUseCase.apply(questionDTO)
                 .flatMap(result -> ServerResponse.ok()

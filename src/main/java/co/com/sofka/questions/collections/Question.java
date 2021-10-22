@@ -13,6 +13,15 @@ public class Question {
     private String type;
     private String category;
     private String email;
+    private String userPhotoURL;
+
+    public String getUserPhotoURL() {
+        return userPhotoURL;
+    }
+
+    public void setUserPhotoURL(String userPhotoURL) {
+        this.userPhotoURL = userPhotoURL;
+    }
 
     public String getEmail() {
         return email;

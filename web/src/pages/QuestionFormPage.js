@@ -4,13 +4,14 @@ import { useHistory } from "react-router-dom";
 import { postQuestion } from '../actions/questionActions'
 import { connect } from 'react-redux'
 
-const FormPage = ({ dispatch, loading, redirect, userId, email}) => {
+const FormPage = ({ dispatch, loading, redirect, userId, email, photoURL}) => {
     const { register, handleSubmit } = useForm();
     const history = useHistory();
 
     const onSubmit = data => {
         data.userId = userId;
         data.email = email;
+        data.userPhotoURL = photoURL;
         dispatch(postQuestion(data));
     };
 
@@ -27,7 +28,7 @@ const FormPage = ({ dispatch, loading, redirect, userId, email}) => {
             <form onSubmit={handleSubmit(onSubmit)}>
 
                 <div>
-                    <label for="type">Type</label>
+                    <label htmlFor="type">Type</label>
                     <select {...register("type")} id="">
                         <option value="OPEN (LONG OPEN BOX)">OPEN (LONG OPEN BOX)</option>
                         <option value="OPINION (SHORT OPEN BOX)">OPINION (SHORT OPEN BOX)</option>
@@ -36,7 +37,7 @@ const FormPage = ({ dispatch, loading, redirect, userId, email}) => {
                     </select>
                 </div>
                 <div>
-                    <label for="category">Category</label>
+                    <label htmlFor="category">Category</label>
                     <select {...register("category")} id="category">
                         <option value="TECHNOLOGY-AND-COMPUTER">TECHNOLOGY AND COMPUTER</option>
                         <option value="SCIENCES">SCIENCES</option>
@@ -48,7 +49,7 @@ const FormPage = ({ dispatch, loading, redirect, userId, email}) => {
                 </div>
 
                 <div>
-                    <label for="question">Question</label>
+                    <label htmlFor="question">Question</label>
                     <textarea id="question" {...register("question", { required: true, maxLength: 300 })} />
                 </div>
                 <button type="submit" className="button" disabled={loading} >{
@@ -65,6 +66,7 @@ const mapStateToProps = state => ({
     redirect: state.question.redirect,
     hasErrors: state.question.hasErrors,
     userId: state.auth.uid,
+    photoURL: state.auth.photoURL,
     email: state.auth.email
 })
 

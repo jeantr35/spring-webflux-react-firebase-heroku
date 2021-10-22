@@ -5,17 +5,16 @@ import {  fetchQuestion, postAnswer } from '../actions/questionActions'
 import { connect } from 'react-redux'
 import { Question } from '../components/Question'
 
-const FormPage = ({ dispatch, loading, redirect, match,hasErrors, question, userId, email, photoURL }) => {
+const UpdateUserPage = ({ dispatch, loading, redirect, match,hasErrors, userId, email, name }) => {
     const { register, handleSubmit } = useForm();
     const { id } = match.params
     const history = useHistory();
 
     const onSubmit = data => {
         data.userId =  userId;
-        data.questionId = id;
         data.email = email;
-        data.userPhotoURL = photoURL;
-        dispatch(postAnswer(data));
+        data.photoURL = photoURL;
+        dispatch(updateUser(data));
     };
 
     useEffect(() => {
@@ -28,30 +27,21 @@ const FormPage = ({ dispatch, loading, redirect, match,hasErrors, question, user
         }
     }, [redirect, history])
 
-    const renderQuestion = () => {
-        if (loading.question) return <p>Loading question...</p>
-        if (hasErrors.question) return <p>Unable to display question.</p>
-
-        return <Question question={question} />
-    }
 
 
     return (
         <section>
-            {renderQuestion()}
-            <h1>New Answer</h1>
-
+            <h1>Update your name</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div>
-                    <label htmlFor="answer">Answer</label>
-                    <textarea id="answer" {...register("answer", { required: true, maxLength: 300 })} />
+                    <label for="answer">Answer</label>
+                    <input id="name" {...register("name", { required: true, maxLength: 300 })} />
                 </div>
                 <button type="submit" className="button" disabled={loading} >{
                     loading ? "Saving ...." : "Save"
                 }</button>
             </form>
         </section>
-
     );
 }
 
@@ -60,9 +50,10 @@ const mapStateToProps = state => ({
     redirect: state.question.redirect,
     question: state.question.question,
     hasErrors: state.question.hasErrors,
-    photoURL: state.auth.photoURL,
     userId: state.auth.uid,
-    email: state.auth.email
+    email: state.auth.email,
+    name: state.auth.name,
+    photoURL: state.auth.photoURL
 })
 
-export default connect(mapStateToProps)(FormPage)
+export default connect(mapStateToProps)(UpdateUserPage)

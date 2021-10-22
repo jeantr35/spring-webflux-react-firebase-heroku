@@ -47,7 +47,7 @@ const Autoomplete = (questions) => {
 
 
     const handleEnter = (ev) => {
-        if(ev.key == 'Enter'){
+        if(ev.key === 'Enter'){
             suggest.length > 0 ? history.push(`/question/${suggest[0].id}`) : history.push(`/questions`)
          } 
     }

@@ -21,6 +21,16 @@ public class QuestionDTO {
     @NotBlank
     private String email;
 
+    private String userPhotoURL;
+
+    public String getUserPhotoURL() {
+        return userPhotoURL;
+    }
+
+    public void setUserPhotoURL(String userPhotoURL) {
+        this.userPhotoURL = userPhotoURL;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -41,13 +51,14 @@ public class QuestionDTO {
         this.category = category;
     }
 
-    public QuestionDTO(String id, String userId, String question, String type, String category, String email) {
+    public QuestionDTO(String id, String userId, String question, String type, String category, String email, String userPhotoURL) {
         this.id = id;
         this.userId = userId;
         this.question = question;
         this.type = type;
         this.category = category;
         this.email = email;
+        this.userPhotoURL = userPhotoURL;
     }
 
     public List<AnswerDTO> getAnswers() {

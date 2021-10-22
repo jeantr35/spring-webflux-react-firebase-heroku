@@ -12,6 +12,16 @@ public class Answer {
     private String answer;
     private Integer position;
     private String email;
+    private String userPhotoURL;
+
+
+    public String getUserPhotoUl() {
+        return userPhotoURL;
+    }
+
+    public void setUserPhotoUl(String userPhotoUl) {
+        this.userPhotoURL = userPhotoUl;
+    }
 
     public String getEmail() {
         return email;
