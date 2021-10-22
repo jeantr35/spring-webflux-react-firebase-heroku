@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {CategoryFilter} from '../components/CategoryFilter' 
 import { fetchQuestions, fetchCategoryQuestions} from '../actions/questionActions'
 import { Question } from '../components/Question'
-import { Switch, Route, Redirect } from 'react-router';
+import Autoomplete from '../components/Autocomplete';
 
 const QuestionsPage = ({ dispatch, loading, questions, hasErrors, match, redirect}) => {
     const { name } = match.params
@@ -29,6 +29,7 @@ const QuestionsPage = ({ dispatch, loading, questions, hasErrors, match, redirec
     return (
         <section>
             <CategoryFilter/>
+            <Autoomplete questions={questions}/>
             <h1>Questions</h1>
 
             {renderQuestions()}
