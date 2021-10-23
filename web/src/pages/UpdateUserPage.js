@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React,  { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
-import {  fetchQuestion, updateUser } from '../actions/questionActions'
+import { updateUser } from '../actions/questionActions'
 import { connect } from 'react-redux'
 
-const UpdateUserPage = ({ dispatch, loading, redirect, match,hasErrors, userId, email, name, photoURL, auth }) => {
+const UpdateUserPage = ({ dispatch, loading, match, userId, email, name, photoURL, auth }) => {
     const { register, handleSubmit } = useForm();
-    const { id } = match.params
-    const history = useHistory();
     const [newname, setNewName] = useState(name)
 
     const onSubmit = data => {
@@ -22,10 +19,6 @@ const UpdateUserPage = ({ dispatch, loading, redirect, match,hasErrors, userId, 
     const handleChange = (e) => {
         setNewName(e.target.value);
     }
-
-    useEffect(() => {
-        dispatch(fetchQuestion(id))
-    }, [dispatch,redirect, history])
 
     return (
         <section>

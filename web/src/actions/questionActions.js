@@ -1,4 +1,4 @@
-const URL_BASE = 'https://pure-tor-90145.herokuapp.com';
+const URL_BASE = 'https://pure-tor-90145.herokuapp.';
 
 export const LOADING = 'LOADING'
 export const LOADED_SUCCESS = 'LOADED_SUCCESS'
@@ -15,17 +15,15 @@ export const failure = () => ({ type: LOADED_FAILURE })
 
 export function updateUser(name, auth){
     const user = auth().currentUser;
+    console.log(name)
     return async dispatch => {
-        console.log(name)
         dispatch(loading())
-        console.log(name)
         try {
             user.updateProfile({
                 displayName: {name}
               })
-              console.log(name)
+
             dispatch(success({redirect: `/update`}))
-            console.log(name)
         } catch (error) {
             dispatch(failure())
         }
