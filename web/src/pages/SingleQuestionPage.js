@@ -34,7 +34,7 @@ const SingleQuestionPage = ({
     if (loading.question) return <p>Loading question...</p>
     if (hasErrors.question) return <p>Unable to display question.</p>
 
-    return <Question question={question} onEdit={onEdit} />
+    return <Question question={question} onEdit={onEdit} userId={userId} />
   }
 
   const onDeleteAnswer = (answer) => {

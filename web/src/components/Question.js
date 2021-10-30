@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export const Question = ({ question, excerpt, onDelete, onEdit }) => (
+export const Question = ({ question, excerpt, onDelete, onEdit, userId }) => (
   <article className={excerpt ? 'question-excerpt' : 'question'}>
   <div className="photo"><img src={question.userPhotoURL} alt=""/></div>
     <div className="content">
@@ -12,7 +12,7 @@ export const Question = ({ question, excerpt, onDelete, onEdit }) => (
       <button className="button right" onClick={() => onDelete(question.id)}>DELETE</button>
     )}
 
-    {onEdit && (
+    {onEdit && userId === question.userId && (
       <button className="button right" onClick={() => onEdit(question)}>EDIT</button>
     )}
 
