@@ -33,6 +33,8 @@ const OwnerQuestionsPage = ({ dispatch, loading, questions, hasErrors, redirect,
           });
     }
 
+    
+
 
     const renderQuestions = () => {
         if (loading) return <p>Loading questions...</p>
@@ -41,7 +43,8 @@ const OwnerQuestionsPage = ({ dispatch, loading, questions, hasErrors, redirect,
         return questions.map(question => <Question
             key={question.id}
             question={question}
-            excerpt onDelete={onDelete} />)
+            excerpt onDelete={onDelete}
+            />)
     }
 
     return (

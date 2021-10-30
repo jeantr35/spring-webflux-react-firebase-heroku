@@ -73,7 +73,6 @@ export function fetchCategoryQuestions(category) {
 }
 
 export function fetchQuestionsByCriteria(title) {
-    console.log(title)
     return async dispatch => {
         dispatch(loading())
         try {
@@ -83,6 +82,18 @@ export function fetchQuestionsByCriteria(title) {
         } catch (error) {
             dispatch(failure())
         }
+    }
+}
+
+export function redirectToNewQuestion(){
+    return async dispatch => {
+        dispatch(success({redirect: `/new`}));
+    }
+}
+
+export function redirectToUpdateQuestion(id){
+    return async dispatch => {
+        dispatch(success({redirect: `/updateQuestion/${id}`}));
     }
 }
 
@@ -104,6 +115,28 @@ export function postQuestion(question) {
         dispatch(loading())
         try {
             const response = await fetch(`${URL_BASE}/create`,
+                {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(question)
+                }
+            )
+            const id = await response.text()
+            dispatch(success({redirect: `/question/${id}`}));
+        } catch (error) {
+            dispatch(failure())
+        }
+    }
+}
+
+export function updateQuestion(question) {
+    return async dispatch => {
+        dispatch(loading())
+        try {
+            const response = await fetch(`${URL_BASE}/update`,
                 {
                     method: 'POST',
                     mode: 'cors',

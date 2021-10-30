@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { deleteAnswer } from '../actions/questionActions'
+import { deleteAnswer, redirectToNewQuestion, redirectToUpdateQuestion } from '../actions/questionActions'
 import { fetchQuestion } from '../actions/questionActions'
 import swal from 'sweetalert';
 import { Question } from '../components/Question'
 import { Answer } from '../components/Answer'
-import { Link } from 'react-router-dom'
+import { Link, useHistory} from 'react-router-dom'
 
 const SingleQuestionPage = ({
   match,
@@ -16,16 +16,25 @@ const SingleQuestionPage = ({
   userId,
   redirect
 }) => {
+
+  const history = useHistory();
+
   const { id } = match.params
   useEffect(() => {
     dispatch(fetchQuestion(id))
   }, [dispatch, id, redirect])
 
+  useEffect(() => {
+    if (redirect) {
+        history.push(redirect);
+    }
+}, [redirect, history])
+
   const renderQuestion = () => {
     if (loading.question) return <p>Loading question...</p>
     if (hasErrors.question) return <p>Unable to display question.</p>
 
-    return <Question question={question} />
+    return <Question question={question} onEdit={onEdit} />
   }
 
   const onDeleteAnswer = (answer) => {
@@ -47,6 +56,23 @@ const SingleQuestionPage = ({
     
 }
 
+const onEdit = (question) => {
+
+  (question.answers && question.answers.length) ? swal({
+    title: "Readme please",
+    text: "A new question will be created because this question have an asnwer",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+  .then((willDelete) => {
+    if (willDelete) {
+      dispatch(redirectToNewQuestion());
+    }
+  })
+   : dispatch(redirectToUpdateQuestion(question.id));
+}
+
   const renderAnswers = () => {
     return (question.answers && question.answers.length) ? question.answers.map(answer => (
       <Answer key={answer.id} answer={answer} onDelete={onDeleteAnswer} userId={userId}/>
@@ -56,10 +82,11 @@ const SingleQuestionPage = ({
   return (
     <section>
       {renderQuestion()}
+      <hr/>
       {userId && <Link to={"/answer/" + id} className="button right">
         Reply
       </Link>}
-
+      
       <h2>Answers</h2>
       {renderAnswers()}
     </section>

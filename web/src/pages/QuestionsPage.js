@@ -11,11 +11,9 @@ const QuestionsPage = ({ dispatch, loading, questions, hasErrors, match, redirec
     useEffect(() => {
         if(name === undefined){
             dispatch(fetchQuestions())
-             console.log("normal");
         }
         if(name !== undefined){
             dispatch(fetchCategoryQuestions(name))
-            console.log(name);
         }
     }, [dispatch, redirect, name])
 

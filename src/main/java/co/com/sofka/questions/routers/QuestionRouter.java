@@ -93,6 +93,18 @@ public class QuestionRouter {
     }
 
     @Bean
+    public RouterFunction<ServerResponse> updateQuestion(UpdateQuestionUseCase updateQuestionUseCase) {
+        return route(POST("/update").and(accept(MediaType.APPLICATION_JSON)),
+                request -> request.bodyToMono(QuestionDTO.class)
+                        .flatMap(questionDTO -> updateQuestionUseCase.apply(questionDTO)
+                                .flatMap(result -> ServerResponse.ok()
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .bodyValue(result))
+                        )
+        );
+    }
+
+    @Bean
     public RouterFunction<ServerResponse> delete(DeleteUseCase deleteUseCase) {
         return route(
                 DELETE("/delete/{id}").and(accept(MediaType.APPLICATION_JSON)),
