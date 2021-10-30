@@ -1,14 +1,18 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
+  Link
 } from 'react-router-dom'
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 import { login, logout } from './actions/authActions';
+
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 
 import { PublicNavbar, PrivateNavbar } from './components/Navbar'
 import HomePage from './pages/HomePage'
@@ -20,16 +24,8 @@ import OwnerQuestionsPage from './pages/OwnerQuestionsPage'
 import { useAuthState } from "react-firebase-hooks/auth";
 import UpdateUserPage from './pages/UpdateUserPage';
 import UpdateQuestionPage from './pages/UpdateQuestionPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
 
-firebase.initializeApp({
-  apiKey: "AIzaSyBSDlcJkzcY6ehtMZq0UvYCRYfJMjRaEFI",
-  authDomain: "question-and-answer-19556.firebaseapp.com",
-  projectId: "question-and-answer-19556",
-  storageBucket: "question-and-answer-19556.appspot.com",
-  messagingSenderId: "814060695759",
-  appId: "1:814060695759:web:9fc7dcafb56b7824ae47ba",
-  measurementId: "G-27X1YHQ7M3"
-});
 
 const auth = firebase.auth();
 
@@ -69,6 +65,9 @@ const App = ({ dispatch }) => {
             <Route exact path="/questionFilter/category/:name" component={QuestionsPage} />
             <Route exact path="/question/:id" component={SingleQuestionPage} />
             <Route exact path="/answer/:id" component={AnswerFormPage} />
+            <Route exact path="/login" component={()=>{return (<LoginPage dispatch={dispatch}></LoginPage>)}} />
+            <Route exact path="/register" component={()=>{return (<RegisterPage dispatch={dispatch}></RegisterPage>)}} />
+            <Route exact path="/forgotPassword" component={()=>{return (<ForgotPasswordPage dispatch={dispatch}></ForgotPasswordPage>)}} />
             <Redirect to="/" />
           </Switch>
         </>
@@ -83,7 +82,14 @@ function SignIn() {
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider);
   };
-  return <button className="button right" onClick={signInWithGoogle}>Sign in with google</button>;
+
+  return <Fragment>
+    <button className="button right" onClick={signInWithGoogle}>Sign in with google</button>
+    <Link to="/login" className="button right">
+      Sing in with email
+    </Link>
+  </Fragment>
+  
 }
 
 

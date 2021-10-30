@@ -11,7 +11,6 @@ const HomePage = ({children}) => (
     <Link to="/questions" className="button">
       View Questions
     </Link>
-  
   </section>
 )
 export default HomePage
