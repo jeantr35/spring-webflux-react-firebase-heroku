@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>You've got a new answer!</title>
+</head>
+<body>
+  <div>If you want to see a the answer to your question: <b th:text="${question.question}"></b></div>
+  <div>Click here if you want to see the answer:<b th:text="${questionURL}"></b> </div>
+  <div>Answer by <br> <img th:src="${userPhotoURL}" width="30" height="40"></div>
+  <br>
+  <div>
+    <p>Dearly the Q&A team</p>
+    <img src="https://www.pikpng.com/pngl/m/586-5862540_free-question-and-answer-png-q-a-clip.png" width="40" height="30">
+  </div>
+</body>
+</html>

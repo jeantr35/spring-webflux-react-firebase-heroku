@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import reactor.core.publisher.Mono;
 
+import javax.mail.MessagingException;
 import java.util.Objects;
 
 @Service
@@ -31,8 +32,11 @@ public class AddAnswerUseCase implements SaveAnswer {
                 answerRepository.save(mapperUtils.mapperToAnswer().apply(answerDTO))
                         .map(answer -> {
                             question.getAnswers().add(answerDTO);
-                            sendEmail.sendEmailTo(question.getEmail(), "You have a new answer",
-                                    "You have a new answer to your question " + question.getQuestion());
+                            try {
+                                sendEmail.sendEmailTo(question, answer);
+                            } catch (MessagingException e) {
+                                e.printStackTrace();
+                            }
                             return question;
                         })
         );
