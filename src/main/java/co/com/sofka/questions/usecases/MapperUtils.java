@@ -2,8 +2,10 @@ package co.com.sofka.questions.usecases;
 
 import co.com.sofka.questions.collections.Answer;
 import co.com.sofka.questions.collections.Question;
+import co.com.sofka.questions.collections.Vote;
 import co.com.sofka.questions.model.AnswerDTO;
 import co.com.sofka.questions.model.QuestionDTO;
+import co.com.sofka.questions.model.VoteDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Function;
@@ -20,6 +22,7 @@ public class MapperUtils {
             answer.setAnswer(updateAnswer.getAnswer());
             answer.setEmail(updateAnswer.getEmail());
             answer.setUserPhotoUl(updateAnswer.getUserPhotoURL());
+            answer.setPosition(updateAnswer.getPosition());
             return answer;
         };
     }
@@ -58,7 +61,30 @@ public class MapperUtils {
                 entity.getAnswer(),
                 entity.getEmail(),
                 entity.getId(),
-                entity.getUserPhotoUl()
+                entity.getUserPhotoUl(),
+                entity.getPosition()
+        );
+    }
+
+    public Function<VoteDTO, Vote> mapperToVote(String id) {
+        return updateVote -> {
+            var vote = new Vote();
+            vote.setId(id);
+            vote.setUserId(updateVote.getUserId());
+            vote.setAnswerId(updateVote.getAnswerId());
+            vote.setQuestionId(updateVote.getQuestionId());
+            vote.setVoteUp(updateVote.getVoteUp());
+            return vote;
+        };
+    }
+
+    public Function<Vote, VoteDTO> mapEntityToVote() {
+        return entity -> new VoteDTO(
+                entity.getId(),
+                entity.getUserId(),
+                entity.getAnswerId(),
+                entity.getQuestionId(),
+                entity.getVoteUp()
         );
     }
 

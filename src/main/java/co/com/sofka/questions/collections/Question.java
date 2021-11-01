@@ -3,6 +3,8 @@ package co.com.sofka.questions.collections;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 
 @Document
 public class Question {
@@ -14,6 +16,7 @@ public class Question {
     private String category;
     private String email;
     private String userPhotoURL;
+
 
     public String getUserPhotoURL() {
         return userPhotoURL;

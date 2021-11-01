@@ -21,6 +21,7 @@ public class QuestionDTO {
     @NotBlank
     private String email;
 
+
     private String userPhotoURL;
 
     public String getUserPhotoURL() {

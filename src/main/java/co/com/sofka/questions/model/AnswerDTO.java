@@ -51,13 +51,14 @@ public class AnswerDTO {
 
     }
 
-    public AnswerDTO(@NotBlank String questionId, @NotBlank String userId, @NotBlank String answer, @NotBlank String email, @NotBlank String id, String userPhotoURL) {
+    public AnswerDTO(@NotBlank String questionId, @NotBlank String userId, @NotBlank String answer, @NotBlank String email, @NotBlank String id, String userPhotoURL, Integer position) {
         this.id = id;
         this.userId = userId;
         this.questionId = questionId;
         this.answer = answer;
         this.email = email;
         this.userPhotoURL = userPhotoURL;
+        this.position = position;
     }
 
     public Integer getPosition() {

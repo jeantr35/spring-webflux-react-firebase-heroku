@@ -13,6 +13,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import reactor.core.publisher.Mono;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -30,10 +33,9 @@ class AddAnswerUseCaseTest {
     @Test
     @DisplayName("Add answer")
     void answerTest(){
-
         var questionDTO = new QuestionDTO("XXXXX", "userid", "test", "open", "test", "aaaa@gmail.com", "aaa");
 
-        var answerDTO = new AnswerDTO("XXXXX","aaa","XXXXX","test", "aaaaa", "aaa");
+        var answerDTO = new AnswerDTO("XXXXX","aaa","XXXXX","test", "aaaaa", "aaa", 0);
         var answer = new Answer();
         answer.setId("aaaaa");
         answer.setQuestionId("XXXXX");
