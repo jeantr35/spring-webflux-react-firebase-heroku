@@ -1,6 +1,4 @@
-/* const URL_BASE = 'https://pure-tor-90145.herokuapp.com'; */
-
-const URL_BASE = 'http://localhost:8080';
+const URL_BASE = 'https://pure-tor-90145.herokuapp.com';
 
 export const LOADING = 'LOADING'
 export const LOADED_SUCCESS = 'LOADED_SUCCESS'
@@ -97,6 +95,8 @@ export function redirectToUpdateQuestion(id){
     }
 }
 
+
+
 export function fetchQuestion(id) {
     return async dispatch => {
         dispatch(loading())
@@ -126,6 +126,28 @@ export function postQuestion(question) {
             )
             const id = await response.text()
             dispatch(success({redirect: `/question/${id}`}));
+        } catch (error) {
+            dispatch(failure())
+        }
+    }
+}
+
+export function sendVote(vote) {
+    return async dispatch => {
+        dispatch(loading())
+        try {
+            const response = await fetch(`${URL_BASE}/vote`,
+                {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(vote)
+                }
+            )
+            const id = await response.text()
+            dispatch(success({redirect: `/question/${vote.questionId}`}));
         } catch (error) {
             dispatch(failure())
         }

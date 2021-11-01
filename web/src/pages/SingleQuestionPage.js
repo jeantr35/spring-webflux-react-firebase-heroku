@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { deleteAnswer, redirectToNewQuestion, redirectToUpdateQuestion } from '../actions/questionActions'
+import { deleteAnswer, redirectToNewQuestion, redirectToUpdateQuestion, sendVote } from '../actions/questionActions'
 import { fetchQuestion } from '../actions/questionActions'
 import swal from 'sweetalert';
 import { Question } from '../components/Question'
@@ -73,9 +73,19 @@ const onEdit = (question) => {
    : dispatch(redirectToUpdateQuestion(question.id));
 }
 
+const handleButton = (userid, answerid, questionid, voteUp) => {
+  const data ={
+    "userId" : userid,
+    "answerId" : answerid,
+    "questionId" : questionid,
+    "voteUp" : voteUp
+  }
+  dispatch(sendVote(data))
+}
+
   const renderAnswers = () => {
     return (question.answers && question.answers.length) ? question.answers.map(answer => (
-      <Answer key={answer.id} answer={answer} onDelete={onDeleteAnswer} userId={userId}/>
+      <Answer key={answer.id} answer={answer} onDelete={onDeleteAnswer} userId={userId} handleButton={handleButton}/>
     )) : <p>Empty answer!</p>;
   }
 
